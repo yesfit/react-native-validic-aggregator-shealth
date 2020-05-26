@@ -1,0 +1,44 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.validic.mobile.rn.shealth">
+    
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+
+    <application>
+        <receiver
+            android:name="com.validic.mobile.shealth.SHealthServiceStopReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.validic.mobile.shealth.STOP_SHEALTH_SERVICE" />
+            </intent-filter>
+        </receiver>
+
+        <!--
+             SHealth Permissions:
+
+                com.samsung.health.blood_glucose
+                com.samsung.health.blood_pressure
+                com.samsung.health.body_temperature
+                com.samsung.health.caffeine_intake
+                com.samsung.health.exercise
+                com.samsung.health.food_info
+                com.samsung.health.food_intake
+                com.samsung.health.hba1c
+                com.samsung.health.heart_rate
+                com.samsung.health.oxygen_saturation
+                com.samsung.health.sleep
+                com.samsung.health.sleep_stage
+                com.samsung.health.uv_exposure
+                com.samsung.health.water_intake
+                com.samsung.health.weight
+                com.samsung.shealth.step_daily_trend
+        -->
+        <meta-data
+            android:name="com.samsung.android.health.platform_type"
+            android:value="rel"/>
+        <meta-data
+            android:name="com.samsung.android.health.permission.read"
+            android:value="com.samsung.shealth.step_daily_trend"/>
+
+    </application>
+
+</manifest>

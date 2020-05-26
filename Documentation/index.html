@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Home</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Home</h1>
+
+    
+
+
+
+    
+
+
+    <h3> </h3>
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+    <section>
+        <article><h2>Getting started</h2>
+<p><code>$ npm install react-native-validic-aggregator-shealth --save</code></p>
+<h3>Mostly automatic installation</h3>
+<p><code>$ react-native link react-native-validic-aggregator-shealth</code></p>
+<h3>Manual installation</h3>
+<h4>Android</h4>
+<ol>
+<li>Open up <code>android/app/src/main/java/[...]/MainApplication.java</code></li>
+</ol>
+<ul>
+<li>Add <code>import com.validic.mobile.rn.shealth.RNValidicMobileAggregatorPackage;</code> to the imports at the top of the file</li>
+<li>Add <code>new RNValidicMobileAggregatorPackage()</code> to the list returned by the <code>getPackages()</code> method</li>
+</ul>
+<ol start="2">
+<li>Append the following lines to <code>android/settings.gradle</code>:<pre class="prettyprint source"><code>include ':react-native-validic-aggregator-shealth'
+project(':react-native-validic-aggregator-shealth').projectDir = new File(rootProject.projectDir, 	'../node_modules/react-native-validic-aggregator-shealth/android')
+</code></pre>
+</li>
+<li>Insert the following lines inside the dependencies block in <code>android/app/build.gradle</code>:<pre class="prettyprint source"><code>  compile project(':react-native-validic-aggregator-shealth')
+</code></pre>
+</li>
+</ol>
+<h5>Native SDK installation</h5>
+<p>Copy <code>validicmobile-shealth.aar</code> from the ValidicMobile Android sdk to the <code>android/app/libs</code> directory of your React native project. Create the 'libs' subdirectory if not present.</p>
+<h5>Samsung Health</h5>
+<p>In order to use Samsung Health with ValidicMobile a valid copy of the Samsung Health SDK must be provided by the developer. This can be downloaded from the SHealth developer portal: <a href="http://developer.samsung.com/health">Samsung SHealth Developer</a>.</p>
+<p>Place the <code>samsung-digital-health-***.jar</code> in the same <code>android/app/libs</code> folder next to the <code>validicmobile-shealth.aar</code> described in the Plugin Installation section.</p>
+<h5>Developer mode</h5>
+<p>In order to test you must enable developer mode in the S Health app on your phone. As of shealth sdk version 1.2.1, you enable developer mode by going to the More-&gt;Settings-&gt;About S Health and tapping the version number until &quot;(Developer Mode)&quot; is displayed next to it.</p>
+<p><img src="img/shealth_developer_mode.png" alt="S Health Developer Mode"></p>
+<h2>Usage</h2>
+<pre class="prettyprint source lang-js"><code>import ValidicSHealth from 'react-native-validic-aggregator-shealth';
+</code></pre>
+<h3>Subscriptions</h3>
+<h4>Configuration</h4>
+<p>Starting with Android Oreo, background execution limits are imposed on applications in the background and will destroy them after a certain amount of time. To prevent this it is recommended to configure the <code>ValidicSHealth</code> object with a foreground service notification configuration. This will ensure that results are develivered in near real time.</p>
+<pre class="prettyprint source lang-js"><code>ValidicSHealth.configure({
+    notification_id: 1,
+    notification_title: &quot;title&quot;,
+    notification_clear_text: &quot;Stop&quot;, // if set will create a button in the notification that will stop observing data until the next time the app is launched
+    notification_icon: &quot;ic_launcher.png&quot; // will look resource folders for file named ic_launcher.png
+});
+</code></pre>
+<h4>Available Data Types</h4>
+<p>Samsung provides several data types that can be subscribed to for notification when data changes.</p>
+<p>The available data types are:</p>
+<ul>
+<li>com.samsung.health.blood_glucose</li>
+<li>com.samsung.health.blood_pressure</li>
+<li>com.samsung.health.body_temperature</li>
+<li>com.samsung.health.caffeine_intake</li>
+<li>com.samsung.health.exercise</li>
+<li>com.samsung.health.food_info</li>
+<li>com.samsung.health.food_intake</li>
+<li>com.samsung.health.hba1c</li>
+<li>com.samsung.health.heart_rate</li>
+<li>com.samsung.health.oxygen_saturation</li>
+<li>com.samsung.health.sleep</li>
+<li>com.samsung.health.sleep_stage</li>
+<li>com.samsung.health.uv_exposure</li>
+<li>com.samsung.health.water_intake</li>
+<li>com.samsung.health.weight</li>
+<li>com.samsung.shealth.step_daily_trend</li>
+</ul>
+<p>NOTE: Data types that are going to be used in your application must be added to the AndroidManifest.xml.</p>
+<p><code>android/app/AndroidManifest.xml</code></p>
+<pre class="prettyprint source lang-xml"><code>&lt;application name=&quot;testApp&quot;>
+    &lt;meta-data android:name=&quot;com.samsung.android.health.platform_type&quot; android:value=&quot;rel&quot;/>
+    &lt;meta-data android:name=&quot;com.samsung.android.health.permission.read&quot; android:value=&quot;com.samsung.health.blood_glucose;com.samsung.health.exercise&quot;/>
+&lt;/application>
+</code></pre>
+<h4>Subscribing</h4>
+<pre class="prettyprint source lang-js"><code>ValidicSHealth.addSubscriptions([&quot;com.samsung.health.exercise&quot;, &quot;com.samsung.health.blood_glucose&quot;]);
+</code></pre>
+<p>NOTE: Calling <code>ValidicSession.endSession()</code> will remove all SHealth subscriptions and stop listening for new data.</p>
+<h3>Historical Fetch</h3>
+<p>Validic provides the ability to query 6 months of data for a subset of data types provided by Samsung Health by querying
+an array of <code>ValidicSHealth.HistoricalSetType</code></p>
+<p>Currently 2 historical sets are available</p>
+<ul>
+<li>ValidicSHealth.HistoricalSetType.HistoricalSetTypeFitness - Exercise data</li>
+<li>ValidicSHealth.HistoricalSetType.HistoricalSetTypeRoutine - Step data</li>
+</ul>
+<pre class="prettyprint source lang-js"><code>ValidicSHealth.fetchHistory([ValidicSHealth.HistoricalSetType.HistoricalSetTypeRoutine]); //fetch last 6 months of walking data
+</code></pre>
+<p>This is will trigger the <code>EVENT_ON_HISTORY_FETCH</code> event described  in the <a href="#Events">Events</a> section</p>
+<h3>Events</h3>
+<p>To listen for events from SHealth an eventListener should be added to the native event emitter. It is recommended to do this in your comonents componentDidMount method</p>
+<pre class="prettyprint source lang-js"><code>ValidicSHealth.eventEmitter.addListener(ValidicSHealth.EventNames.EVENT_ON_PERMISSION_CHANGE, (permissions)=>{
+    // SHealth permissions have changed
+    console.log(permissions.accepted) // array of accepted permissions from the user
+    console.log(permissions.denied) // array of permissions denied by the user
+});
+
+ValidicSHealth.eventEmitter.addListener(ValidicSHealth.EventNames.EVENT_ON_ERROR, (error)=>{
+    // An error has occurred with SHealth
+    console.error(error);
+});
+
+ValidicSHealth.eventEmitter.addListener(ValidicSHealth.EventNames.EVENT_ON_RECORDS,(recordSummary)=>{
+    // Validic has gathered records because of a data type subscription change
+    console.log(recordSummary) // summary of how many records  were collected by the subscriptions keyed by the `ValidicSHealth.SummaryTypes`
+});
+
+ValidicSHealth.eventEmitter.addListener(ValidicSHealth.EventNames.EVENT_ON_HISTORY_FETCH, (historySummary)=>{
+    // Validic data has pulled 6 months of records from SHealth
+    console.log(historySummary) // summary of how many records  were collected by the subscriptions keyed by the `ValidicSHealth.HistoricalSetTypes`
+});
+</code></pre>
+<p>Events should be removed when they are no longer necessary or when the component listening will be unmounted</p>
+<pre class="prettyprint source lang-js"><code>componentWillUnmount(){
+    ValidicSHealth.eventEmitter.removeAllListeners(ValidicSHealth.EventNames.EVENT_ON_PERMISSION_CHANGE);
+    ValidicSHealth.eventEmitter.removeAllListeners(ValidicSHealth.EventNames.EVENT_ON_RECORDS);
+    ValidicSHealth.eventEmitter.removeAllListeners(ValidicSHealth.EventNames.EVENT_ON_HISTORY_FETCH);
+    ValidicSHealth.eventEmitter.removeAllListeners(ValidicSHealth.EventNames.EVENT_ON_ERROR);
+}
+</code></pre></article>
+    </section>
+
+
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="ValidicSHealth.html">ValidicSHealth</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.4</a> on Wed May 06 2020 20:39:26 GMT+0000 (Coordinated Universal Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
