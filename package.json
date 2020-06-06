@@ -20,12 +20,10 @@
   "readmeFilename": "README.md",
   "peerDependencies": {
     "react": "16.9.0",
-    "react-native": "0.61.2",
-    "react-native-validic-session": "1.3.0"
+    "react-native": "0.61.2"
   },
   "devDependencies": {
     "react": "16.9.0",
-    "react-native": "0.61.2",
-    "react-native-validic-session": "file:../react-native-validic-session"
+    "react-native": "0.61.2"
   }
 }
