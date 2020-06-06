@@ -20,10 +20,12 @@
   "readmeFilename": "README.md",
   "peerDependencies": {
     "react": "16.9.0",
-    "react-native": "0.61.2"
+    "react-native": "0.61.2",
+    "react-native-validic-session": "https://github.com/yesfit/react-native-validic-session.git"
   },
   "devDependencies": {
     "react": "16.9.0",
-    "react-native": "0.61.2"
+    "react-native": "0.61.2",
+    "react-native-validic-session": "https://github.com/yesfit/react-native-validic-session.git"
   }
 }
