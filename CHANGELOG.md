@@ -1,4 +1,10 @@
 # Changelog
+
+## 1.3.5 2020-04-05
+- Bundled native SDKs upgraded to:
+  - iOS: v1.12.11
+  - Android: v1.12.15
+  - 
 ## 1.3.4 3-08-2020
 - Bundled native SDKs upgraded to:
   - iOS: v1.12.9
